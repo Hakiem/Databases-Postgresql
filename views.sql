@@ -39,7 +39,7 @@ CREATE OR REPLACE  VIEW Registrations AS
 -------------------- VIEW PassedCourses	--------------------
 ------------------------------------------------------------------------------------------------------------------------
 CREATE OR REPLACE VIEW PassedCourses AS
-	SELECT ssn, ConcatCourseCodeAndCourseName(t.course, c.name) AS course, credits FROM taken t
+	SELECT ssn, t.course AS course, credits FROM taken t
 	JOIN course c ON c.code = t.course
 WHERE t.grade <> 'U';
 
@@ -49,8 +49,8 @@ WHERE t.grade <> 'U';
 CREATE OR REPLACE VIEW UnreadMandatory AS 
 	SELECT k.ssn, array_agg(k.courseslist) AS course
 		FROM ( SELECT s.ssn, m.course::text AS courseslist
-				FROM mandatoryprogram m
-				JOIN student s USING (program)
+				FROM student s
+				JOIN mandatoryprogram m USING (program)
 				GROUP BY s.ssn, m.course) k
 	WHERE NOT (k.courseslist IN ( 
 			SELECT t.course

@@ -1,23 +1,31 @@
 INSERT INTO "program" VALUES 
 	('Automation Technology', 'AT'),
 	('Industrial Mathematics', 'IMT'),
+	('Information Technology', 'IT'),
 	('Computer Science and Engineering', 'CSEP') ON CONFLICT ("name") DO NOTHING;
 
 INSERT INTO department VALUES
 	('Computer Engineering', 'CE'),
+	('Scrum', 'SC')
 	('Mathematics', 'MT'),
 	('Computer Science', 'CS') ON CONFLICT ("name") DO NOTHING;
 	
 INSERT INTO hosts VALUES
 	('Computer Science', 'Computer Science and Engineering'),
+	('Scrum', 'Information Technology'),
 	('Computer Engineering', 'Computer Science and Engineering') ON CONFLICT ("program", department) DO NOTHING;
 
 INSERT INTO student VALUES 
 	('890611-1052', 'Andree Arnette', 'aandree', 'Computer Science and Engineering'),
-        ('920421-4682', 'Axelina Johannesson', 'axelinaj', 'Computer Science and Engineering'),
-        ('720426-4969', 'Viktoria Svedin', 'viktos', 'Computer Science and Engineering'),
-        ('870721-0962', 'Karola Högberg', 'karolah', 'Computer Science and Engineering'),
-        ('861219-3469', 'Natalie Strömgren', 'natalies', 'Computer Science and Engineering') ON CONFLICT ("ssn") DO NOTHING;
+    ('920421-4682', 'Axelina Johannesson', 'axelinaj', 'Computer Science and Engineering'),
+    ('720426-4969', 'Viktoria Svedin', 'viktos', 'Computer Science and Engineering'),
+    ('870721-0962', 'Karola Högberg', 'karolah', 'Computer Science and Engineering'),
+	
+	('980620-5267', 'Greta Albinsson', 'gretaa', 'Information Technology'),
+    ('841123-8523', 'Anna-Stina Engdahl', 'annas', 'Information Technology'),
+    ('971104-1575', 'Sixten Rydell', 'sixr', 'Information Technology'),
+    ('750405-0985', 'Nanna Ringdahl', 'nanna', 'Information Technology'),
+    ('861219-3469', 'Natalie Strömgren', 'natalies', 'Computer Science and Engineering') ON CONFLICT ("ssn") DO NOTHING;
 
 INSERT INTO branch VALUES 
 	('Computer languages', 'Computer Science and Engineering'),
@@ -25,6 +33,7 @@ INSERT INTO branch VALUES
 	('Software Engineering','Computer Science and Engineering'),
 	('Interaction Design', 'Computer Science and Engineering'),
 	('Interaction Design', 'Automation Technology'),
+	('Test Driven Development', 'Information Technology'),
 	('Statistics', 'Industrial Mathematics') ON CONFLICT ("name", "program") DO NOTHING;
 
 INSERT INTO belongsTo VALUES
@@ -32,133 +41,220 @@ INSERT INTO belongsTo VALUES
 	('920421-4682', 'Computer languages', 'Computer Science and Engineering'),
 	('720426-4969', 'Algorithms', 'Computer Science and Engineering'),
 	('870721-0962', 'Algorithms', 'Computer Science and Engineering'),
+	
+	('980620-5267', 'Test Driven Development', 'Information Technology'),
+    ('841123-8523', 'Test Driven Development', 'Information Technology'),
+    ('971104-1575', 'Test Driven Development', 'Information Technology'),
+    ('750405-0985', 'Test Driven Development', 'Information Technology'),
+	
 	('861219-3469', 'Interaction Design', 'Computer Science and Engineering') ON CONFLICT (ssn) DO NOTHING;
 	
 INSERT INTO course VALUES
-	('AA1', 'Project planning', 7.5, 'Computer Science'),
-	('AA2', 'Programming C', 7.5, 'Computer Science'),
-	('AA3', 'Data Science', 7.5, 'Computer Science'),
-	('AA4', 'Databases', 7.5, 'Computer Science'),
-	('AA5', 'Embedded Systems', 7.5, 'Computer Engineering'),
-	('AA6', 'Calculus 1', 7.5, 'Mathematics'),
-	('AA7', 'Calculus 2', 7.5, 'Mathematics'),
-	('AA8', 'Probability', 7.5, 'Mathematics'),
-	('AA9', 'Introduction to Computers', 7.5, 'Computer Science'),
-	('BB1', 'Discrete Mathematics', 7.5, 'Mathematics') ON CONFLICT (code) DO NOTHING;
+	('SYS080', 'Project planning', 7.5, 'Computer Science'),
+	('TDA226', 'Programming C', 7.5, 'Computer Science'),
+	('MME234', 'Data Science', 7.5, 'Computer Science'),
+	('SSD673', 'Databases', 7.5, 'Computer Science'),
+	('TMV210', 'Embedded Systems', 7.5, 'Computer Engineering'),
+	('KKL289', 'Calculus 1', 7.5, 'Mathematics'),
+	('FGH345', 'Calculus 2', 7.5, 'Mathematics'),
+	('JGT234', 'Probability', 7.5, 'Mathematics'),
+	('TTB234', 'Introductory Unit Testing', 7.5, 'Scrum'),
+	('GHT235', 'Mocks and Fakes', 7.5, 'Scrum'),
+	('TFG662', 'Inversion of Control Containers', 7.5, 'Scrum'),
+	('POG345', 'Generic Repository and Unit of Work Patterns', 7.5, 'Scrum'),
+	('PSK153', 'Singleton Pattern', 7.5, 'Scrum'),
+	('INT690', 'Introduction to Everything', 7.5, 'Computer Science'),
+	('LPO221', 'Introduction to Computers', 7.5, 'Computer Science'),
+	('ANM234', 'Discrete Mathematics', 7.5, 'Mathematics') ON CONFLICT (code) DO NOTHING;
 
 INSERT INTO prerequisite VALUES
-	('AA3', 'AA9'),
-	('AA6', 'BB1'),
-	('AA7', 'AA6'),
-	('AA8', 'BB1'),
-	('AA2', 'AA9'),
-	('AA4', 'AA9') ON CONFLICT (course, prerequisite) DO NOTHING;
+	('SYS080', 'INT690'),
+	('TDA226', 'LPO221'), 
+	('MME234', 'TDA226'),
+	('SSD673', 'TDA226'),
+	('TMV210', 'TDA226'),
+	('KKL289', 'ANM234'),
+	('FGH345', 'KKL289'),
+	('JGT234', 'ANM234'),
+	('TTB234', 'TDA226'),
+	('GHT235', 'TTB234'),
+	('TFG662', 'TTB234'),
+	('POG345', 'TTB234'),
+	('PSK153', 'TTB234'),
+	('LPO221', 'INT690'),
+	('ANM234', 'ANM234') ON CONFLICT (course, prerequisite) DO NOTHING;
 
 INSERT INTO classification VALUES
 	('Mathematical'),
-	('Hands On'),
 	('Research'),
-	('Technical'),
 	('Seminar') ON CONFLICT ("name") DO NOTHING;
 
 INSERT INTO classified VALUES
-	('AA1', 'Hands On'),
-	('AA2', 'Technical'),
-	('AA3', 'Research'),
-	('AA4', 'Hands On'),
-	('AA5', 'Hands On'),
-	('AA6', 'Mathematical'),
-	('AA7', 'Mathematical'),
-	('AA8', 'Mathematical'),
-	('AA9', 'Technical'),
-	('BB1', 'Mathematical') ON CONFLICT (course) DO NOTHING;
+	('SYS080', 'Seminar'),
+	('TDA226', 'Research'),
+	('MME234', 'Research'),
+	('SSD673', 'Seminar'),
+	('TMV210', 'Mathematical'),
+	('KKL289', 'Mathematical'),
+	('FGH345', 'Mathematical'),
+	('JGT234', 'Mathematical'),
+	('TTB234', 'Seminar'),
+	('GHT235', 'Seminar'),
+	('TFG662', 'Seminar'),
+	('POG345', 'Seminar'),
+	('PSK153', 'Seminar'),
+	('LPO221', 'Research'),
+	('ANM234', 'Mathematical') ON CONFLICT (course) DO NOTHING;
 
 INSERT INTO mandatoryprogram VALUES
-	('AA1', 'Automation Technology'),
-	('AA2', 'Automation Technology'),
-	('AA3', 'Automation Technology'),
-	('AA4', 'Automation Technology'),
+	('SYS080', 'Automation Technology'),
+	('TDA226', 'Automation Technology'),
+	('MME234', 'Automation Technology'),
+	('SSD673', 'Automation Technology'),
 	
-	('AA1', 'Computer Science and Engineering'),
-	('AA2', 'Computer Science and Engineering'),
-	('AA3', 'Computer Science and Engineering'),
-	('AA4', 'Computer Science and Engineering'),
-	('AA5', 'Computer Science and Engineering'),
-	('AA6', 'Computer Science and Engineering'),
-	('AA7', 'Computer Science and Engineering'),
-	('AA8', 'Computer Science and Engineering'),
-	('AA9', 'Computer Science and Engineering'),
-	('BB1', 'Computer Science and Engineering'),
-
-	('AA1', 'Industrial Mathematics'),
-	('AA6', 'Industrial Mathematics'),
-	('AA7', 'Industrial Mathematics'),
-	('AA8', 'Industrial Mathematics'),
-	('AA9', 'Industrial Mathematics'),
-	('BB1', 'Industrial Mathematics') ON CONFLICT (course, "program") DO NOTHING;
+	('SYS080', 'Computer Science and Engineering'),
+	('TDA226', 'Computer Science and Engineering'),
+	('MME234', 'Computer Science and Engineering'),
+	('SSD673', 'Computer Science and Engineering'),
+	('TMV210', 'Computer Science and Engineering'),
+	('TTB234', 'Computer Science and Engineering'),
+	('GHT235', 'Computer Science and Engineering'),
+	('TFG662', 'Computer Science and Engineering'),
+	('POG345', 'Computer Science and Engineering'),
+	('PSK153', 'Computer Science and Engineering'),
+	('INT690', 'Computer Science and Engineering'),
+	('LPO221', 'Computer Science and Engineering'),
+    ('ANM234', 'Computer Science and Engineering'),
+	
+	('SYS080', 'Information Technology'),
+	('TDA226', 'Information Technology'),
+	('MME234', 'Information Technology'),
+	('SSD673', 'Information Technology'),
+	('TMV210', 'Information Technology'),
+	('TTB234', 'Information Technology'),
+	('GHT235', 'Information Technology'),
+	('TFG662', 'Information Technology'),
+	('POG345', 'Information Technology'),
+	('PSK153', 'Information Technology'),
+	('INT690', 'Information Technology'),
+	('LPO221', 'Information Technology'),
+	('ANM234', 'Information Technology'),
+	
+	('KKL289', 'Industrial Mathematics'),
+	('FGH345', 'Industrial Mathematics'),
+	('JGT234', 'Industrial Mathematics'),
+	('INT690', 'Industrial Mathematics'),
+	('LPO221', 'Industrial Mathematics'),
+	('ANM234', 'Industrial Mathematics') ON CONFLICT (course, "program") DO NOTHING;
 
 INSERT INTO mandatorybranch VALUES 
-	('AA1','Computer languages', 'Computer Science and Engineering'),
-	('AA2','Computer languages', 'Computer Science and Engineering'),
-	('AA3','Computer languages', 'Computer Science and Engineering'),
-	('AA4','Computer languages', 'Computer Science and Engineering'),
-	('AA5','Computer languages', 'Computer Science and Engineering'),
-	('AA6','Computer languages', 'Computer Science and Engineering'),
-	('AA7','Computer languages', 'Computer Science and Engineering'),
-	('AA8','Computer languages', 'Computer Science and Engineering'),
-	('AA9','Computer languages', 'Computer Science and Engineering'),
-	('BB1','Computer languages', 'Computer Science and Engineering') ON CONFLICT ("course", "program", "branch") DO NOTHING;
+	('SYS080', 'Computer languages', 'Computer Science and Engineering'),
+	('TDA226', 'Computer languages', 'Computer Science and Engineering'),
+	('MME234', 'Computer languages', 'Computer Science and Engineering'),
+	('SSD673', 'Computer languages', 'Computer Science and Engineering'),
+	('TMV210', 'Computer languages', 'Computer Science and Engineering'),
+	('TTB234', 'Computer languages', 'Computer Science and Engineering'),
+	('GHT235', 'Computer languages', 'Computer Science and Engineering'),
+	('TFG662', 'Computer languages', 'Computer Science and Engineering'),
+	('POG345', 'Computer languages', 'Computer Science and Engineering'),
+	('PSK153', 'Computer languages', 'Computer Science and Engineering'),
+	('INT690', 'Computer languages', 'Computer Science and Engineering'),
+	('LPO221', 'Computer languages', 'Computer Science and Engineering'),
+	('ANM234', 'Computer languages', 'Computer Science and Engineering'),
+	
+	('SYS080', 'Test Driven Development', 'Information Technology'),
+	('TDA226', 'Test Driven Development', 'Information Technology'),
+	('MME234', 'Test Driven Development', 'Information Technology'),
+	('SSD673', 'Test Driven Development', 'Information Technology'),
+	('INT690', 'Test Driven Development', 'Information Technology'),
+	('LPO221', 'Test Driven Development', 'Information Technology'),
+	('ANM234', 'Test Driven Development', 'Information Technology') ON CONFLICT ("course", "program", "branch") DO NOTHING;
+	
+	
 
 INSERT INTO recommendedbranch VALUES 
-	('AA1','Computer languages', 'Computer Science and Engineering'),
-	('AA2','Computer languages', 'Computer Science and Engineering'),
-	('AA3','Computer languages', 'Computer Science and Engineering'),
-	('AA4','Computer languages', 'Computer Science and Engineering'),
-	('AA5','Computer languages', 'Computer Science and Engineering'),
-	('AA6','Computer languages', 'Computer Science and Engineering'),
-	('AA7','Computer languages', 'Computer Science and Engineering'),
-	('AA8','Computer languages', 'Computer Science and Engineering'),
-	('AA9','Computer languages', 'Computer Science and Engineering'),
-	('BB1','Computer languages', 'Computer Science and Engineering') ON CONFLICT ("course", "program", "branch") DO NOTHING;
+	('SYS080', 'Computer languages', 'Computer Science and Engineering'),
+	('TDA226', 'Computer languages', 'Computer Science and Engineering'),
+	('MME234', 'Computer languages', 'Computer Science and Engineering'),
+	('SSD673', 'Computer languages', 'Computer Science and Engineering'),
+	('TMV210', 'Computer languages', 'Computer Science and Engineering'),
+	('TTB234', 'Computer languages', 'Computer Science and Engineering'),
+	('GHT235', 'Computer languages', 'Computer Science and Engineering'),
+	('TFG662', 'Computer languages', 'Computer Science and Engineering'),
+	('POG345', 'Computer languages', 'Computer Science and Engineering'),
+	('PSK153', 'Computer languages', 'Computer Science and Engineering'),
+	('INT690', 'Computer languages', 'Computer Science and Engineering'),
+	('LPO221', 'Computer languages', 'Computer Science and Engineering'),
+	('ANM234', 'Computer languages', 'Computer Science and Engineering'),
+	
+	('SYS080', 'Test Driven Development', 'Information Technology'),
+	('TDA226', 'Test Driven Development', 'Information Technology'),
+	('MME234', 'Test Driven Development', 'Information Technology'),
+	('SSD673', 'Test Driven Development', 'Information Technology'),
+	('INT690', 'Test Driven Development', 'Information Technology'),
+	('LPO221', 'Test Driven Development', 'Information Technology'),
+	('ANM234', 'Test Driven Development', 'Information Technology') ON CONFLICT ("course", "program", "branch") DO NOTHING;
 
 INSERT INTO registered VALUES
-	('890611-1052', 'AA1'),
-	('890611-1052', 'AA3'),
-	('890611-1052', 'AA5'),
+	('890611-1052', 'GHT235'),
+	('890611-1052', 'SSD673'),
+	('890611-1052', 'LPO221'),
 
-	('920421-4682', 'AA2'),
-	('920421-4682', 'AA1'),
-	('920421-4682', 'AA6'),
-	('920421-4682', 'BB1'),
+	('920421-4682', 'SYS080'),
+	('920421-4682', 'TMV210'),
+	('920421-4682', 'MME234'),
+	('920421-4682', 'LPO221'),
 
-	('720426-4969', 'AA9'),
-	('720426-4969', 'AA7'),
-	('720426-4969', 'AA6'),
-	('720426-4969', 'BB1') ON CONFLICT (ssn, course) DO NOTHING;
+	('720426-4969', 'SYS080'),
+	('720426-4969', 'TMV210'),
+	('720426-4969', 'MME234'),
+	('720426-4969', 'LPO221')ON CONFLICT (ssn, course) DO NOTHING;
 
 INSERT INTO taken VALUES
-	('890611-1052', 'AA1', 'U'),
-	('890611-1052', 'AA3', '3'),
+	('890611-1052', 'TMV210', 'U'),
+	('890611-1052', 'TTB234', '3'),
+	('890611-1052', 'GHT235', '4'),
+	('890611-1052', 'TFG662', '3'),
+	('890611-1052', 'POG345', 'U'),
+	('890611-1052', 'PSK153', '3'),
+	('890611-1052', 'INT690', 'U'),
+	('890611-1052', 'LPO221', '3'),
 
-    ('920421-4682', 'AA6', '3'),
-	('920421-4682', 'BB1', '5'),
+    ('920421-4682', 'POG345', '3'),
+	('920421-4682', 'PSK153', '5'),
+	('920421-4682', 'INT690', '3'),
+	('920421-4682', 'LPO221', '5'),
 
-	('720426-4969', 'AA6', 'U'),
-	('720426-4969', 'BB1', 'U') ON CONFLICT (ssn, course) DO NOTHING;
+	('720426-4969', 'INT690', 'U'),
+	('720426-4969', 'LPO221', 'U'),
+	
+	('980620-5267', 'SYS080', '3'),
+	('980620-5267', 'TDA226', '3'),
+	('980620-5267', 'MME234', '3'),
+	
+	('841123-8523', 'SYS080', '3'), 
+	('841123-8523', 'TDA226', 'U'),
+	('841123-8523', 'MME234', '3') ON CONFLICT (ssn, course) DO NOTHING;
 
 INSERT INTO limitedcourse VALUES
-	('AA1', 20),
-	('AA2', 15),
-	('AA3', 10),
-	('AA4', 10),
-	('AA5', 10),
-	('AA6', 15),
-	('AA7', 10),
-	('AA8', 10),
-	('AA9', 10),
-	('BB1', 10) ON CONFLICT (course) DO NOTHING;
+	('SYS080',  7),
+	('TDA226',  5),
+	('MME234',  5),
+	('SSD673',  7),
+	('TMV210',  4),
+	('KKL289',  3),
+	('FGH345',  7),
+	('JGT234',  5),
+	('TTB234',  5),
+	('GHT235',  7),
+	('TFG662',  4),
+	('POG345',  3),
+	('PSK153',  5),
+	('INT690',  5),
+	('LPO221',  5),
+	('ANM234',  9)ON CONFLICT (course) DO NOTHING;
 
 INSERT INTO waitinglist VALUES
-	('890611-1052', 'AA3', 1),
-	('920421-4682', 'AA3', 2),
-	('720426-4969', 'AA3', 3) ON CONFLICT (student, course) DO NOTHING;
+	('890611-1052', 'SYS080', 1),
+	('920421-4682', 'MME234', 2),
+	('720426-4969', 'TMV210', 3) ON CONFLICT (student, course) DO NOTHING;
