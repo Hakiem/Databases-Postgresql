@@ -17,16 +17,16 @@ INSERT INTO hosts VALUES
 
 INSERT INTO student VALUES 
 	('890611-1052', 'Andree Arnette', 'aandree', 'Computer Science and Engineering'),
-    ('920421-4682', 'Axelina Johannesson', 'axelinaj', 'Computer Science and Engineering'),
-    ('720426-4969', 'Viktoria Svedin', 'viktos', 'Computer Science and Engineering'),
-    ('870721-0962', 'Karola Högberg', 'karolah', 'Computer Science and Engineering'),
+    	('920421-4682', 'Axelina Johannesson', 'axelinaj', 'Computer Science and Engineering'),
+    	('720426-4969', 'Viktoria Svedin', 'viktos', 'Computer Science and Engineering'),
+    	('870721-0962', 'Karola Högberg', 'karolah', 'Computer Science and Engineering'),
 	
 	('980620-5267', 'Greta Albinsson', 'gretaa', 'Information Technology'),
-    ('841123-8523', 'Anna-Stina Engdahl', 'annas', 'Information Technology'),
-    ('971104-1575', 'Sixten Rydell', 'sixr', 'Information Technology'),
-    ('750405-0985', 'Nanna Ringdahl', 'nanna', 'Information Technology'),
+    	('841123-8523', 'Anna-Stina Engdahl', 'annas', 'Information Technology'),
+    	('971104-1575', 'Sixten Rydell', 'sixr', 'Information Technology'),
+    	('750405-0985', 'Nanna Ringdahl', 'nanna', 'Information Technology'),
 	
-    ('861219-3469', 'Natalie Strömgren', 'natalies', 'Computer Science and Engineering');
+    	('861219-3469', 'Natalie Strömgren', 'natalies', 'Computer Science and Engineering');
 
 INSERT INTO branch VALUES 
 	('Computer languages', 'Computer Science and Engineering'),
@@ -44,9 +44,9 @@ INSERT INTO belongsTo VALUES
 	('870721-0962', 'Algorithms', 'Computer Science and Engineering'),
 	
 	('980620-5267', 'Test Driven Development', 'Information Technology'),
-    ('841123-8523', 'Test Driven Development', 'Information Technology'),
-    ('971104-1575', 'Test Driven Development', 'Information Technology'),
-    ('750405-0985', 'Test Driven Development', 'Information Technology');
+    	('841123-8523', 'Test Driven Development', 'Information Technology'),
+    	('971104-1575', 'Test Driven Development', 'Information Technology'),
+    	('750405-0985', 'Test Driven Development', 'Information Technology');
 	
 INSERT INTO course VALUES
 	('SYS080', 'Project planning', 7.5, 'Computer Science'),
@@ -127,7 +127,7 @@ INSERT INTO mandatoryprogram VALUES
 	('PSK153', 'Computer Science and Engineering'),
 	('INT690', 'Computer Science and Engineering'),
 	('LPO221', 'Computer Science and Engineering'),
-    ('ANM234', 'Computer Science and Engineering'),
+    	('ANM234', 'Computer Science and Engineering'),
 	
 	('SYS080', 'Information Technology'),
 	('TDA226', 'Information Technology'),
