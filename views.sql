@@ -9,7 +9,6 @@ CREATE OR REPLACE VIEW StudentFollowing AS
 ------------------------------------------------------------------------------------------------------------------------
 CREATE OR REPLACE FUNCTION ConcatCourseCodeAndCourseName (code CHAR(12), courseName character varying) RETURNS TEXT AS $$
 BEGIN
-
 	RETURN code::text || ' - ' || courseName::text;
 END;
 $$ LANGUAGE plpgsql;
