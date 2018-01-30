@@ -36,15 +36,17 @@ CREATE TABLE student(
 CREATE TABLE branch(
     "name" VARCHAR(50) NOT NULL,
     "program" VARCHAR(50) NOT NULL,
-	CONSTRAINT branch_pkeys PRIMARY KEY ("name", "program")
+	CONSTRAINT branch_pkeys PRIMARY KEY ("name", "program"),
+	CONSTRAINT branch_program_program_fkey FOREIGN KEY ("program") REFERENCES public.program("name")
 );
 
 CREATE TABLE belongsTo(
-    ssn CHAR(12) NOT NULL,
+    student CHAR(12) NOT NULL,
     branch VARCHAR(50) NOT NULL, 
     "program" VARCHAR(50) NOT NULL,
-    CONSTRAINT belongsto_ssn_pkey PRIMARY KEY ("ssn"),
-    CONSTRAINT belongsto_student_fkeys FOREIGN KEY (ssn, "program") REFERENCES student("ssn", "program"),
+    CONSTRAINT belongsto_pkey PRIMARY KEY (student),
+	CONSTRAINT belongsto_student_ssn_fkey FOREIGN KEY (student) REFERENCES student(ssn),
+    CONSTRAINT belongsto_student_fkeys FOREIGN KEY (student, "program") REFERENCES student("ssn", "program"),
     CONSTRAINT belongsTo_branch_fkeys FOREIGN KEY(branch, "program") REFERENCES branch ("name", "program")
 );
 
@@ -73,7 +75,7 @@ CREATE TABLE classification(
 CREATE TABLE classified(
 	course CHAR(8) NOT NULL,
     classification VARCHAR(50) NOT NULL,
-	CONSTRAINT classified_course_pkey PRIMARY KEY ("course"),
+	CONSTRAINT classified_course_pkey PRIMARY KEY ("course", classification),
 	CONSTRAINT classified_course_course_fkey FOREIGN KEY ("course") REFERENCES course ("code"),
 	CONSTRAINT classified_classification_classification_fkey FOREIGN KEY ("classification") REFERENCES classification ("name")
 );
@@ -98,35 +100,35 @@ CREATE TABLE mandatorybranch(
 CREATE TABLE recommendedbranch(
 	course CHAR(8) NOT NULL,
     branch VARCHAR(50) NOT NULL,
-    "program" VARCHAR(50) NOT NULL REFERENCES public.program ("name"),
+    "program" VARCHAR(50) NOT NULL,
     CONSTRAINT recommendedbranch_pkeys PRIMARY KEY ("course", "program", "branch"),
 	CONSTRAINT recommendedbranch_course_course_fkey FOREIGN KEY ("course") REFERENCES course ("code"),
 	CONSTRAINT recommendedbranch_branch_fkeys FOREIGN KEY ("branch", "program") REFERENCES branch ("name", "program")
 );
 
 CREATE TABLE registered (
-	ssn CHAR(12) NOT NULL,
+	student CHAR(12) NOT NULL,
     course VARCHAR(50) NOT NULL,
-    CONSTRAINT registered_pkeys PRIMARY KEY (ssn, course),
-	CONSTRAINT registered_student_ssn_fkey FOREIGN KEY (ssn) REFERENCES student (ssn),
+    CONSTRAINT registered_pkeys PRIMARY KEY (student, course),
+	CONSTRAINT registered_student_ssn_fkey FOREIGN KEY (student) REFERENCES student (ssn),
 	CONSTRAINT registered_course_course_fkey FOREIGN KEY (course) REFERENCES course (code)
 );
 
 CREATE TYPE greid AS ENUM ('U','3', '4', '5');
 CREATE TABLE Taken(
-	ssn CHAR(12) NOT NULL,
+	student CHAR(12) NOT NULL,
     course VARCHAR(50) NOT NULL,
     grade greid NOT NULL DEFAULT 'U',
-    CONSTRAINT taken_pkeys PRIMARY KEY (ssn, course),
-	CONSTRAINT taken_student_ssn_fkey FOREIGN KEY (ssn) REFERENCES student ("ssn"),
+    CONSTRAINT taken_pkeys PRIMARY KEY (student, course),
+	CONSTRAINT taken_student_ssn_fkey FOREIGN KEY (student) REFERENCES student ("ssn"),
 	CONSTRAINT taken_course_course_fkey FOREIGN KEY (course) REFERENCES course ("code")
 );
 
 CREATE TABLE limitedcourse(
-	course CHAR(8) NOT NULL,
+	code CHAR(8) NOT NULL,
     seats SMALLINT DEFAULT 0 NOT NULL,
-	CONSTRAINT limitedcourse_pkey PRIMARY KEY (course),
-	CONSTRAINT limitedcourse_course_course_fkey FOREIGN KEY (course) REFERENCES course (code)
+	CONSTRAINT limitedcourse_pkey PRIMARY KEY (code),
+	CONSTRAINT limitedcourse_course_course_fkey FOREIGN KEY (code) REFERENCES course (code)
 );
 
 CREATE TABLE waitinglist(
@@ -136,6 +138,6 @@ CREATE TABLE waitinglist(
     CONSTRAINT waitinglist_pkeys PRIMARY KEY (student, course),
 	CONSTRAINT waitinglist_ukeys UNIQUE(course, "position"),
 	CONSTRAINT waitinglist_student_student_fkey FOREIGN KEY ("student") REFERENCES student ("ssn"),
-	CONSTRAINT waitinglist_limitedcourse_course_fkey FOREIGN KEY (course) REFERENCES limitedcourse (course)
+	CONSTRAINT waitinglist_limitedcourse_course_fkey FOREIGN KEY (course) REFERENCES limitedcourse (code)
 );
 

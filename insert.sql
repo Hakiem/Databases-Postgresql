@@ -2,18 +2,18 @@ INSERT INTO "program" VALUES
 	('Automation Technology', 'AT'),
 	('Industrial Mathematics', 'IMT'),
 	('Information Technology', 'IT'),
-	('Computer Science and Engineering', 'CSEP') ON CONFLICT ("name") DO NOTHING;
+	('Computer Science and Engineering', 'CSEP');
 
 INSERT INTO department VALUES
 	('Computer Engineering', 'CE'),
-	('Scrum', 'SC')
+	('Scrum', 'SC'),
 	('Mathematics', 'MT'),
-	('Computer Science', 'CS') ON CONFLICT ("name") DO NOTHING;
+	('Computer Science', 'CS');
 	
 INSERT INTO hosts VALUES
 	('Computer Science', 'Computer Science and Engineering'),
 	('Scrum', 'Information Technology'),
-	('Computer Engineering', 'Computer Science and Engineering') ON CONFLICT ("program", department) DO NOTHING;
+	('Computer Engineering', 'Computer Science and Engineering');
 
 INSERT INTO student VALUES 
 	('890611-1052', 'Andree Arnette', 'aandree', 'Computer Science and Engineering'),
@@ -25,7 +25,8 @@ INSERT INTO student VALUES
     ('841123-8523', 'Anna-Stina Engdahl', 'annas', 'Information Technology'),
     ('971104-1575', 'Sixten Rydell', 'sixr', 'Information Technology'),
     ('750405-0985', 'Nanna Ringdahl', 'nanna', 'Information Technology'),
-    ('861219-3469', 'Natalie Strömgren', 'natalies', 'Computer Science and Engineering') ON CONFLICT ("ssn") DO NOTHING;
+	
+    ('861219-3469', 'Natalie Strömgren', 'natalies', 'Computer Science and Engineering');
 
 INSERT INTO branch VALUES 
 	('Computer languages', 'Computer Science and Engineering'),
@@ -34,7 +35,7 @@ INSERT INTO branch VALUES
 	('Interaction Design', 'Computer Science and Engineering'),
 	('Interaction Design', 'Automation Technology'),
 	('Test Driven Development', 'Information Technology'),
-	('Statistics', 'Industrial Mathematics') ON CONFLICT ("name", "program") DO NOTHING;
+	('Statistics', 'Industrial Mathematics');
 
 INSERT INTO belongsTo VALUES
 	('890611-1052', 'Computer languages', 'Computer Science and Engineering'),
@@ -45,27 +46,29 @@ INSERT INTO belongsTo VALUES
 	('980620-5267', 'Test Driven Development', 'Information Technology'),
     ('841123-8523', 'Test Driven Development', 'Information Technology'),
     ('971104-1575', 'Test Driven Development', 'Information Technology'),
-    ('750405-0985', 'Test Driven Development', 'Information Technology'),
-	
-	('861219-3469', 'Interaction Design', 'Computer Science and Engineering') ON CONFLICT (ssn) DO NOTHING;
+    ('750405-0985', 'Test Driven Development', 'Information Technology');
 	
 INSERT INTO course VALUES
 	('SYS080', 'Project planning', 7.5, 'Computer Science'),
 	('TDA226', 'Programming C', 7.5, 'Computer Science'),
 	('MME234', 'Data Science', 7.5, 'Computer Science'),
 	('SSD673', 'Databases', 7.5, 'Computer Science'),
+	('INT690', 'Introduction to Everything', 7.5, 'Computer Science'),
+	('LPO221', 'Introduction to Computers', 7.5, 'Computer Science'),
+	
 	('TMV210', 'Embedded Systems', 7.5, 'Computer Engineering'),
+	
 	('KKL289', 'Calculus 1', 7.5, 'Mathematics'),
 	('FGH345', 'Calculus 2', 7.5, 'Mathematics'),
 	('JGT234', 'Probability', 7.5, 'Mathematics'),
+	('ANM234', 'Discrete Mathematics', 7.5, 'Mathematics'),
+	
 	('TTB234', 'Introductory Unit Testing', 7.5, 'Scrum'),
 	('GHT235', 'Mocks and Fakes', 7.5, 'Scrum'),
 	('TFG662', 'Inversion of Control Containers', 7.5, 'Scrum'),
 	('POG345', 'Generic Repository and Unit of Work Patterns', 7.5, 'Scrum'),
-	('PSK153', 'Singleton Pattern', 7.5, 'Scrum'),
-	('INT690', 'Introduction to Everything', 7.5, 'Computer Science'),
-	('LPO221', 'Introduction to Computers', 7.5, 'Computer Science'),
-	('ANM234', 'Discrete Mathematics', 7.5, 'Mathematics') ON CONFLICT (code) DO NOTHING;
+	('PSK153', 'Singleton Pattern', 7.5, 'Scrum');
+	
 
 INSERT INTO prerequisite VALUES
 	('SYS080', 'INT690'),
@@ -82,12 +85,12 @@ INSERT INTO prerequisite VALUES
 	('POG345', 'TTB234'),
 	('PSK153', 'TTB234'),
 	('LPO221', 'INT690'),
-	('ANM234', 'ANM234') ON CONFLICT (course, prerequisite) DO NOTHING;
+	('ANM234', 'ANM234');
 
 INSERT INTO classification VALUES
 	('Mathematical'),
 	('Research'),
-	('Seminar') ON CONFLICT ("name") DO NOTHING;
+	('Seminar');
 
 INSERT INTO classified VALUES
 	('SYS080', 'Seminar'),
@@ -104,7 +107,7 @@ INSERT INTO classified VALUES
 	('POG345', 'Seminar'),
 	('PSK153', 'Seminar'),
 	('LPO221', 'Research'),
-	('ANM234', 'Mathematical') ON CONFLICT (course) DO NOTHING;
+	('ANM234', 'Mathematical');
 
 INSERT INTO mandatoryprogram VALUES
 	('SYS080', 'Automation Technology'),
@@ -145,7 +148,7 @@ INSERT INTO mandatoryprogram VALUES
 	('JGT234', 'Industrial Mathematics'),
 	('INT690', 'Industrial Mathematics'),
 	('LPO221', 'Industrial Mathematics'),
-	('ANM234', 'Industrial Mathematics') ON CONFLICT (course, "program") DO NOTHING;
+	('ANM234', 'Industrial Mathematics');
 
 INSERT INTO mandatorybranch VALUES 
 	('SYS080', 'Computer languages', 'Computer Science and Engineering'),
@@ -168,7 +171,7 @@ INSERT INTO mandatorybranch VALUES
 	('SSD673', 'Test Driven Development', 'Information Technology'),
 	('INT690', 'Test Driven Development', 'Information Technology'),
 	('LPO221', 'Test Driven Development', 'Information Technology'),
-	('ANM234', 'Test Driven Development', 'Information Technology') ON CONFLICT ("course", "program", "branch") DO NOTHING;
+	('ANM234', 'Test Driven Development', 'Information Technology');
 	
 	
 
@@ -193,7 +196,7 @@ INSERT INTO recommendedbranch VALUES
 	('SSD673', 'Test Driven Development', 'Information Technology'),
 	('INT690', 'Test Driven Development', 'Information Technology'),
 	('LPO221', 'Test Driven Development', 'Information Technology'),
-	('ANM234', 'Test Driven Development', 'Information Technology') ON CONFLICT ("course", "program", "branch") DO NOTHING;
+	('ANM234', 'Test Driven Development', 'Information Technology');
 
 INSERT INTO registered VALUES
 	('890611-1052', 'GHT235'),
@@ -208,18 +211,23 @@ INSERT INTO registered VALUES
 	('720426-4969', 'SYS080'),
 	('720426-4969', 'TMV210'),
 	('720426-4969', 'MME234'),
-	('720426-4969', 'LPO221')ON CONFLICT (ssn, course) DO NOTHING;
+	('720426-4969', 'LPO221');
 
 INSERT INTO taken VALUES
-	('890611-1052', 'TMV210', 'U'),
+	('890611-1052', 'SYS080', '3'),
+	('890611-1052', 'TDA226', '3'),
+	('890611-1052', 'MME234', '4'),
+	('890611-1052', 'SSD673', '3'),
+	('890611-1052', 'TMV210', '3'),
 	('890611-1052', 'TTB234', '3'),
-	('890611-1052', 'GHT235', '4'),
+	('890611-1052', 'GHT235', '3'),
 	('890611-1052', 'TFG662', '3'),
-	('890611-1052', 'POG345', 'U'),
+	('890611-1052', 'POG345', '3'),
 	('890611-1052', 'PSK153', '3'),
-	('890611-1052', 'INT690', 'U'),
+	('890611-1052', 'INT690', '3'),
 	('890611-1052', 'LPO221', '3'),
-
+	('890611-1052', 'ANM234', '3'),
+	
     ('920421-4682', 'POG345', '3'),
 	('920421-4682', 'PSK153', '5'),
 	('920421-4682', 'INT690', '3'),
@@ -234,7 +242,7 @@ INSERT INTO taken VALUES
 	
 	('841123-8523', 'SYS080', '3'), 
 	('841123-8523', 'TDA226', 'U'),
-	('841123-8523', 'MME234', '3') ON CONFLICT (ssn, course) DO NOTHING;
+	('841123-8523', 'MME234', '3');
 
 INSERT INTO limitedcourse VALUES
 	('SYS080',  7),
@@ -252,9 +260,9 @@ INSERT INTO limitedcourse VALUES
 	('PSK153',  5),
 	('INT690',  5),
 	('LPO221',  5),
-	('ANM234',  9)ON CONFLICT (course) DO NOTHING;
+	('ANM234',  9);
 
 INSERT INTO waitinglist VALUES
-	('890611-1052', 'SYS080', 1),
+	('720426-4969', 'SYS080', 1),
 	('920421-4682', 'MME234', 2),
-	('720426-4969', 'TMV210', 3) ON CONFLICT (student, course) DO NOTHING;
+	('720426-4969', 'TMV210', 3);
