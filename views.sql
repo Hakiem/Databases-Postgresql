@@ -17,10 +17,10 @@ CREATE OR REPLACE VIEW FinishedCourses AS
 ------------------------------------------------------------------------------------------------------------------------
 CREATE OR REPLACE  VIEW Registrations AS	
 	SELECT r.student, r.course, 'registered' As status 
-	FROM registered as r JOIN course c ON(c.code = r.course)
+		FROM registered as r JOIN course c ON(c.code = r.course)
 	UNION 
 	SELECT w.student AS student, w.course, 'waiting' As status 
-	FROM waitinglist AS w JOIN course c ON(c.code = w.course);
+		FROM waitinglist AS w JOIN course c ON(c.code = w.course);
 
 ------------------------------------------------------------------------------------------------------------------------
 -------------------- VIEW PassedCourses	--------------------
@@ -50,24 +50,6 @@ CREATE OR REPLACE VIEW UnreadMandatory AS
 		GROUP BY s.ssn, v.course
 	) AS a 
 GROUP BY a.ssn, a.courseslist;
-
-
-------------------------------------------------------------------------------------------------------------------------
--------------------- Helper Function : classification - Returns an Integer
-------------------------------------------------------------------------------------------------------------------------
-CREATE OR REPLACE FUNCTION classification (classif character varying, sssn CHAR(12)) RETURNS INTEGER AS $$
-DECLARE
-  kount SMALLINT;
-
-BEGIN
-	IF classif <> 'Mathematical' THEN
-		kount := (SELECT COUNT(*) FROM passedcourses JOIN classified USING (course) WHERE student = sssn AND classification = classif);
-	ELSE
-		kount := (SELECT COALESCE(SUM(credits), 0) FROM passedcourses JOIN classified USING (course) WHERE student = sssn AND classification = classif)::integer;
-	END IF;
-	RETURN kount;
-END;
-$$ LANGUAGE plpgsql;
 
 ------------------------------------------------------------------------------------------------------------------------
 -------------------- VIEW PathToGraduation --------------------
